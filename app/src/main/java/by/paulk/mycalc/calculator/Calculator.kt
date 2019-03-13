@@ -8,18 +8,17 @@ class Calculator : ICalculator {
     override  fun calculate(input: String):String{
 
         val expression = ExpressionBuilder(input).build()
-        try {
+        return try {
             val result = expression.evaluate()
 
             if ((result % 1) == 0.0){
-                return result.toInt().toString()
-            }
-            else{
-                return result.toString()
+                result.toInt().toString()
+            } else{
+                result.toString()
             }
         } catch (ex: ArithmeticException) {
 
-            return "ERROR"
+            "ERROR"
         }
     }
 

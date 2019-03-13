@@ -12,9 +12,9 @@ import by.paulk.mycalc.contracts.IInputBuilder
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var txtInput: TextView
-    val calculator: ICalculator = Calculator()
-    val inputBuilder: IInputBuilder = InputBuilder()
+    private lateinit var txtInput: TextView
+    private val calculator: ICalculator = Calculator()
+    private val inputBuilder: IInputBuilder = InputBuilder()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,24 +35,24 @@ class MainActivity : AppCompatActivity() {
 
 
     fun onDigit(view: View) {
-        txtInput.text = inputBuilder.build((view as Button).text,txtInput.text.toString());
+        txtInput.text = inputBuilder.build((view as Button).text,txtInput.text.toString())
     }
 
     fun onDecimalPoint(view: View) {
-        txtInput.text = inputBuilder.build((view as Button).text,txtInput.text.toString());
+        txtInput.text = inputBuilder.build((view as Button).text,txtInput.text.toString())
     }
 
     fun onOperator(view: View) {
-        txtInput.text = inputBuilder.build((view as Button).text,txtInput.text.toString());
+        this.txtInput.text = inputBuilder.build((view as Button).text,txtInput.text.toString())
     }
 
     fun onClear(view: View) {
-        txtInput.text = inputBuilder.build((view as Button).text,txtInput.text.toString());
+        txtInput.text = inputBuilder.build((view as Button).text,txtInput.text.toString())
     }
 
 
     fun onEqual(view: View) {
-        var result = inputBuilder.
+        val result = inputBuilder.
             build((view as Button).text,
                 txtInput.text.toString())
 

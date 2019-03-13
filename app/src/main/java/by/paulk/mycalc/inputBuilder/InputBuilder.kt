@@ -24,10 +24,10 @@ class InputBuilder : IInputBuilder {
             }
             "C" -> result = ""
 
-            "=" -> if (input.matches(endsWithDigit)&& input.contains(containsOperator)){
-                result = input
+            "=" -> result = if (input.matches(endsWithDigit)&& input.contains(containsOperator)){
+                input
             } else {
-                result = ""
+                ""
             }
         }
         return result
