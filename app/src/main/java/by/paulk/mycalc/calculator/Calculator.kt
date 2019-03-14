@@ -5,6 +5,8 @@ import net.objecthunter.exp4j.ExpressionBuilder
 
 class Calculator : ICalculator {
 
+    private val errorMessage = "ERROR"
+
     override  fun calculate(input: String):String{
 
         val expression = ExpressionBuilder(input).build()
@@ -18,7 +20,7 @@ class Calculator : ICalculator {
             }
         } catch (ex: ArithmeticException) {
 
-            "ERROR"
+            errorMessage
         }
     }
 

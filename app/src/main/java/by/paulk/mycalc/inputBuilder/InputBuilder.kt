@@ -4,32 +4,45 @@ import by.paulk.mycalc.contracts.IInputBuilder
 
 class InputBuilder : IInputBuilder {
 
+    val endsWithDigit = ".*\\d$".toRegex()
+    val containsOperator = "[*/+\\-]".toRegex()
+    val containsOneDot = "\\.".toRegex()
+
     override fun build (pressedButton: CharSequence,input: String): String{
 
-        val endsWithDigit = ".*\\d$".toRegex()
-        val containsOperator = "[*/+\\-]".toRegex()
-        val containsOneDot = "\\.".toRegex()
+        return when (pressedButton) {
 
-        var result:String = input
+            "+","-","*","/" -> (if (input.matches(endsWithDigit)){
+                input.plus(pressedButton)
+            }
+                    else{
 
-        when (pressedButton) {
-            "+","-","*","/" -> if (input.matches(endsWithDigit)){
-                result = input.plus(pressedButton)
-            }
-            "0","1","2","3","4","5","6","7","8","9" -> if (!input.endsWith("ERROR",true)) {
-                result = input.plus(pressedButton)
-            }
-            "." -> if (input.matches(endsWithDigit)&& !input.contains(containsOneDot)){
-                result = input.plus(pressedButton)
-            }
-            "C" -> result = ""
+            }).toString()
 
-            "=" -> result = if (input.matches(endsWithDigit)&& input.contains(containsOperator)){
+            "0","1","2","3","4","5","6","7","8","9" -> (if (!input.endsWith("ERROR",true)) {
+                input.plus(pressedButton)
+            }
+            else{
+
+            }).toString()
+
+            "." -> (if (input.matches(endsWithDigit)&& !input.contains(containsOneDot)){
+                input.plus(pressedButton)
+            }
+            else{
+
+            }).toString()
+
+            "C" -> ""
+
+            "=" -> (if (input.matches(endsWithDigit)&& input.contains(containsOperator)){
                 input
-            } else {
-                ""
             }
+            else{
+
+            }).toString()
+
+            else -> ""
         }
-        return result
     }
 }
