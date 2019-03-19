@@ -4,15 +4,11 @@ import by.paulk.mycalc.contracts.IInputBuilder
 
 class InputBuilder : IInputBuilder {
 
-    val endsWithDigit = ".*\\d$".toRegex()
-    val containsOperator = "[*/+\\-]".toRegex()
-    val containsOneDot = "\\.".toRegex()
-
     override fun build (pressedButton: CharSequence,input: String): String{
 
         return when (pressedButton) {
 
-            "+","-","*","/" -> (if (input.matches(endsWithDigit)){
+            "+","-","*","/" -> (if (input.matches(Companion.endsWithDigit)){
                 input.plus(pressedButton)
             }
                     else{
@@ -26,7 +22,7 @@ class InputBuilder : IInputBuilder {
 
             }).toString()
 
-            "." -> (if (input.matches(endsWithDigit)&& !input.contains(containsOneDot)){
+            "." -> (if (input.matches(Companion.endsWithDigit)&& !input.contains(Companion.containsOneDot)){
                 input.plus(pressedButton)
             }
             else{
@@ -35,7 +31,7 @@ class InputBuilder : IInputBuilder {
 
             "C" -> ""
 
-            "=" -> (if (input.matches(endsWithDigit)&& input.contains(containsOperator)){
+            "=" -> (if (input.matches(Companion.endsWithDigit)&& input.contains(Companion.containsOperator)){
                 input
             }
             else{
@@ -44,5 +40,11 @@ class InputBuilder : IInputBuilder {
 
             else -> ""
         }
+    }
+
+    companion object {
+        val containsOneDot = "\\.".toRegex()
+        val containsOperator = "[*/+\\-]".toRegex()
+        val endsWithDigit = ".*\\d$".toRegex()
     }
 }

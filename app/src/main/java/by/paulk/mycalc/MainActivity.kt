@@ -12,6 +12,7 @@ import by.paulk.mycalc.contracts.IInputBuilder
 
 class MainActivity : AppCompatActivity() {
 
+    private val EXPRESSION = "EXPRESSION"
     private lateinit var expressionInput: TextView
     private val calculator: ICalculator = Calculator()
     private val inputBuilder: IInputBuilder = InputBuilder()
@@ -25,44 +26,45 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle?) {
 
-        outState?.putString("EXPRESSION", expressionInput.text.toString())
+        outState?.putString(EXPRESSION, expressionInput.text.toString())
         super.onSaveInstanceState(outState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        expressionInput.text = savedInstanceState.getString("EXPRESSION")
+        expressionInput.text = savedInstanceState.getString(EXPRESSION)
     }
 
 
     fun onDigit(view: View) {
-        expressionInput.text = inputBuilder.build((view as Button).text, expressionInput.text.toString())
+        updateExpression(view)
     }
 
     fun onDecimalPoint(view: View) {
-        expressionInput.text = inputBuilder.build((view as Button).text, expressionInput.text.toString())
+        updateExpression(view)
     }
 
     fun onOperator(view: View) {
-        expressionInput.text = inputBuilder.build((view as Button).text, expressionInput.text.toString())
+        updateExpression(view)
     }
 
     fun onClear(view: View) {
-        expressionInput.text = inputBuilder.build((view as Button).text, expressionInput.text.toString())
+        updateExpression(view)
     }
 
 
     fun onEqual(view: View) {
-        val result = inputBuilder.build(
-            (view as Button).text,
-            expressionInput.text.toString()
-        )
+        val result = updateExpression(view).toString()
 
         if (result != "") {
             expressionInput.text = calculator.calculate(result)
         }
     }
 
+    fun updateExpression(view: View){
+
+        expressionInput.text = inputBuilder.build((view as Button).text, expressionInput.text.toString())
+    }
 
 }
 
