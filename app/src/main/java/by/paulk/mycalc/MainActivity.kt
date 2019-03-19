@@ -12,55 +12,59 @@ import by.paulk.mycalc.contracts.IInputBuilder
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var txtInput: TextView
-    val calculator: ICalculator = Calculator()
-    val inputBuilder: IInputBuilder = InputBuilder()
+    private val EXPRESSION = "EXPRESSION"
+    private lateinit var expressionInput: TextView
+    private val calculator: ICalculator = Calculator()
+    private val inputBuilder: IInputBuilder = InputBuilder()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
-        txtInput = findViewById(R.id.txtInput)
+        expressionInput = findViewById(R.id.expressionInput)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
 
-        outState?.putString("EXPRESSION", txtInput.text.toString())
+        outState?.putString(EXPRESSION, expressionInput.text.toString())
         super.onSaveInstanceState(outState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        txtInput.text = savedInstanceState.getString("EXPRESSION")
+        expressionInput.text = savedInstanceState.getString(EXPRESSION)
     }
 
 
     fun onDigit(view: View) {
-        txtInput.text = inputBuilder.build((view as Button).text,txtInput.text.toString());
+        updateExpression(view)
     }
 
     fun onDecimalPoint(view: View) {
-        txtInput.text = inputBuilder.build((view as Button).text,txtInput.text.toString());
+        updateExpression(view)
     }
 
     fun onOperator(view: View) {
-        txtInput.text = inputBuilder.build((view as Button).text,txtInput.text.toString());
+        updateExpression(view)
     }
 
     fun onClear(view: View) {
-        txtInput.text = inputBuilder.build((view as Button).text,txtInput.text.toString());
+        updateExpression(view)
     }
 
 
     fun onEqual(view: View) {
-        var result = inputBuilder.
-            build((view as Button).text,
-                txtInput.text.toString())
+        val result = updateExpression(view).toString()
 
         if (result != "") {
-            txtInput.text = calculator.calculate(result)
+            expressionInput.text = calculator.calculate(result)
         }
     }
 
+    fun updateExpression(view: View){
+
+        expressionInput.text = inputBuilder.build((view as Button).text, expressionInput.text.toString())
+    }
 
 }
 
